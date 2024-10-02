@@ -22,6 +22,7 @@ namespace HttpTask
 		public MainWindow()
 		{
 			InitializeComponent();
+			DataContext = new MainViewModel();
 		}
 	}
 }

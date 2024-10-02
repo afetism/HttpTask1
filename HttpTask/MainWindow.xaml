@@ -16,9 +16,9 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="150" Header="Name"
-         DisplayMemberBinding="{Binding Name}"  />
+         DisplayMemberBinding="{Binding FirstName}"  />
                     <GridViewColumn Width="150" Header="Surname"  
-         DisplayMemberBinding="{Binding Surname}" />
+         DisplayMemberBinding="{Binding LastName}" />
                     <GridViewColumn Width="80" Header="Age"
          DisplayMemberBinding="{Binding Age}" />
 
@@ -29,11 +29,11 @@
         <StackPanel Grid.Column="1">
             <StackPanel Orientation="Horizontal" Margin="30">
                 <TextBlock Width="100" >Name</TextBlock>
-                <TextBox Width="150" Text="{Binding Name}"></TextBox>
+                <TextBox Width="150" Text="{Binding FirstName}"></TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="30">
                 <TextBlock Width="100">Surname</TextBlock>
-                <TextBox Width="150" Text="{Binding Surname}"></TextBox>
+                <TextBox Width="150" Text="{Binding LastName}"></TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="30">
                 <TextBlock Width="100">Age</TextBlock>
