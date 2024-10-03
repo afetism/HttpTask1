@@ -1,8 +1,10 @@
 ﻿
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Text.Json;
 
 namespace HttpTask;
@@ -89,19 +91,76 @@ public class MainViewModel:INotifyPropertyChanged
 		else return true;
 	}
 
-	private void executeAdd(object obj)
+	private async void executeAdd(object obj)
 	{
-		throw new NotImplementedException();
+		try
+		{
+			var url = "http://localhost:27001/Users";
+			using var httpClient=new HttpClient();
+			httpClient.BaseAddress = new Uri(url);
+			Random random = new Random();
+			var json = JsonSerializer.Serialize(new User() { LastName=LastName, FirstName=FirstName, Age=Age, Id=random.Next(1,1000) });
+			LastName=string.Empty;
+			FirstName=string.Empty;
+			Age=0;
+			var content = new StringContent(json);
+			var response = await httpClient.PostAsync(url, content);	
+		}
+		catch (Exception ex)
+		{
+
+			throw;
+		}
 	}
 
-	private void executeUpdateCommand(object obj)
+	private async void executeUpdateCommand(object obj)
 	{
-		throw new NotImplementedException();
+		try
+		{
+			var url = "http://localhost:27001/Users";
+			using var httpClient=new HttpClient();
+			httpClient.BaseAddress = new Uri(url);
+			int userIdToDelete = SelectedUser.Id;
+			var json = JsonSerializer.Serialize(new User() { LastName=LastName, FirstName=FirstName, Age=Age, Id=userIdToDelete });
+			var content= new StringContent(json);
+			LastName=string.Empty;
+			FirstName=string.Empty;
+			Age=0;
+			var response = await httpClient.PutAsync(url, content);
+		}
+		catch (Exception ex)
+		{
+
+			throw;
+		}
 	}
 
-	private void executeDeleteCommand(object obj)
+	private async void executeDeleteCommand(object obj)
 	{
-		
+		int userIdToDelete = SelectedUser.Id;
+
+		using HttpClient client = new HttpClient();
+
+		try
+		{
+
+			StringContent content = new StringContent(userIdToDelete.ToString(), Encoding.UTF8, "text/plain");
+
+			string url = $"http://localhost:27001/users/{userIdToDelete}";
+			LastName=string.Empty;
+			FirstName=string.Empty;
+			Age=0;
+			HttpResponseMessage response = await client.DeleteAsync(url);
+
+
+
+
+		}
+		catch (HttpRequestException e)
+		{
+			Console.WriteLine("Error in client request:");
+			Console.WriteLine(e.Message);
+		}
 	}
 
 	private async void executeRefresh(object obj)
